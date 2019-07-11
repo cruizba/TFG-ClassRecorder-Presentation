@@ -1,0 +1,419 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>TFG - Bike3S</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/night.css">
+        <link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="center">
+                    <h3>Arquitectura, diseño y configuración de un simulador de bicicletas compartidas</h3>
+                    <small>
+                        Autor:<a href="https://github.com/cruizba">Carlos Ruiz Ballesteros</a>
+                        <br>
+                        Tutor: <a href="">Holger Billhardt</a>
+                    </small>
+                    </p>
+                </section>
+                <section data-markdown>
+                    ### Índice de contenidos
+                    1. Introducción:
+                        - Motivación.
+                        - Objetivos.
+                    2. Desarrollo:
+                        - Arquitectura y diseño.
+                        - Configuración.
+                        - Extensibilidad.
+                    4. Pruebas.
+                    5. Conclusión y mejoras.
+                </section>
+                <section data-markdown class="center">
+                    ### 1. Introducción - Motivación
+                </section>
+				<section>
+                    <h3>1. Introducción - Motivación</h3>
+                    <div>
+                        <ul>
+                            <li> Movilidad en las grandes ciudades:
+                            <ul>
+                                <li> Ágil.
+                                <li> Accesible para todos.
+                            </ul>
+                            <li> Problema de interes creciente debido a:
+                            <ul>
+                                <li> Mejorar circulación automovilística.
+                                <li> Reducción de la contaminación.
+                                <li> Incentivación de medios alternativos como servicio.
+                            </ul>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h3>1. Introducción - Motivación</h3>
+                    <div style="float: right; width: 35%">
+                        <img src="./images/BiciMAD.jpg"/>
+                        <img src="./images/velib.jpg">
+                    </div>
+                    <div style="text-align: left; width: 65%">
+                        <p>Mejorar los sistemas ya existentes, como por ejemplo los sistemas de bicicletas compartidas.</p>
+                        <ul>
+                            <li>Ejemplos</li>
+                            <ul>
+                                <li>BiciMad <minor>Madrid - España</minor></li>
+                                <li>Vèlib <minor>Paris - Francia</minor></li>
+                                <li>Santander cycles<minor>Londres - Reino Unido</minor></li>
+                            </ul>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h3>1. Introducción - Motivación</h3>
+                    <h4>¿Qué podemos hacer para mejorar este sistema?</h4>
+                    <h5></h5>
+                    <div style="text-align: left;">
+                        <p>Balancear los recursos (bicicletas) entre estaciones. Algunas situaciones que pueden producir
+                                un desequilibrio son:
+                        </p>
+                        <ul>
+                            <li>Eventos especiales</li>
+                            <li>Horas punta</li>
+                            <li>Aglomeraciones inesperadas</li>
+                        </ul>
+                    </div>
+                </section>
+                <section data-markdown>
+                    ### 1. Introducción - Motivación
+                    <div style="text-align: left">
+
+                    #### ¿Cómo podemos probar nuevas estrategias de balanceo?
+                    Probar/implementar soluciones a estos problemas en la realidad puede ser muy tedioso y complicado:
+                    - Altos riesgos y costes.
+                    - Posibles cambios estructurales.
+                    - Implementación de nuevos sistemas informáticos.
+                    
+                    </div>
+                    
+                </section>
+                <section data-markdown class="center">
+                    # Necesitamos un simulador
+                </section>
+                <section data-markdown class="center">
+                    ### 1. Introducción - Objetivos
+                </section>
+                <section data-markdown>
+                    ### 1. Introducción - Objetivos
+                    #### Objetivos globales
+
+                    - Probar algoritmos de balanceo y predicción de demanda.
+                    - Implementar sistemas de recomendaciones e incentivos para optimizar la disponibilidad de bicis.
+                    - Plantear nuevas distribuciones de estaciones sobre una ciudad.
+
+                </section>
+                <section data-markdown>
+                    ### 1. Introducción - Objetivos
+                    #### Objetivos de este TFG
+
+                    - Simulaciones realistas:
+                        - Usuarios que utilicen rutas reales.
+                        - Poder simular distintos tipos de usuarios.
+                        - Recrear infraestructuras reales en ciudades reales.
+                    - Configuración de un estado inicial del sistema.
+                    - Extensibilidad del simulador.
+                        - Crear nuevos usuarios con facilidad.
+                        - Crear nuevos recomendadores con facilidad.
+                </section>
+                <section data-markdown class="center">
+                    ### 2. Desarrollo - Arquitectura y diseño
+                </section>
+                <section>
+                    <h3>2. Desarrollo - Arquitectura y diseño.</h3>
+                    <h4>Arquitectura simple del simulador</h4>
+                    <img src="./images/Arquitecture_1_v2.jpg" style="width: 100%"/>
+                </section>
+                <section data-markdown>
+                    ### 2. Desarrollo - Arquitectura y diseño
+                    #### Dividido en dos partes principales
+                    - Backend - Lógica del simulador
+                        - Cargador de configuración
+                        - Núcleo
+                        - Generador de históricos
+                    - Frontend - Interfaz de usuario
+                        - Editor de configuraciones
+                        - Cargador de configuraciones en el simulador
+                        - Visualizador de históricos
+                        - Analizador de históricos
+                </section>
+                <section>
+                    <h3>2. Desarrollo - Arquitectura y diseño</h3>
+                    <img src="./images/Arquitecture_final.png" style="width: 80%"/>
+                </section>
+                <section data-markdown class="center">
+                    ### 2. Desarrollo - Configuración
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 2. Desarrollo - Configuración
+                    Para definir un estado inicial necesitamos unos archivos de configuración.
+                    - Estaciones:
+                        - Capacidad: Número de bicis disponibles.
+                        - Cantidad de bicis.
+                        - Posición geográfica.
+                    - Parámetros globales.
+                        - Tiempo máximo de reservas.
+                        - Tiempo total de simulación.
+                        - Semilla.
+                        - Cuadro delimitador.
+                        - Directorio de históricos.
+                </section>
+                <section data-markdown class="center">
+                    ## Falta lo más importante.
+                </section>
+                <section data-markdown class="center">
+                    ## Los usuarios.
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 2. Desarrollo - Configuración
+                    #### Dos formas de configurar los usuarios.
+                    - Entry Points:
+
+                    Son puntos geográficos desde los cuales aparecerán usuarios de una forma determinada (por ejemplo, siguiendo un proceso de Poisson) a lo largo del tiempo.
+                    
+                    - Usuarios individuales:
+
+                    El simulador recibe este fichero con información precisa de su ubicación y momento de aparición.
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 2. Desarrollo - Configuración
+                    #### En resumen
+                    Archivos de configuración necesarios:
+                    - Estaciones.
+                    - Usuarios.
+                    - Parámetros globales.
+
+                    Si se desean crear un archivo de configuración de usuarios el simulador dispone de un generador que recibe entry points. 
+                </section>
+                <section data-markdown class="center">
+                    ### 2. Desarrollo - Extensibilidad.
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 2. Desarrollo - Extensibilidad.
+                    Se han utilizado técnicas y patrones de diseño para la facil implementación para nuevos desarrolladores.
+                    - Factorías.
+                    - Inyección de dependencias.
+                    - Reflexión.
+                </section>
+                <section>
+                    <h3>2. Desarrollo - Extensibilidad.</h3>
+                    <h4>Ejemplo con los usuarios</h4>
+                    <img src="./images/User_factory.png" style="width: 80%"/>
+                </section>
+                <section data-markdown class="center">
+                    ### ¿Que ventajas nos aporta utilizar tantas técnicas y patrones?
+                </section>
+                <section>
+                    <h3>Mejor os lo muestro</h3>
+                    <img src="./images/linus.jpg">
+                </section>
+                <section data-markdown class="center" style="font-size: 30px">
+                    ¡Sólo este código es necesario para empezar a implementar un usuario!
+
+```
+    @UserType("USER_TOURIST")
+    public class UserTourist extends User {
+
+        @UserParameters
+        public class Parameters {
+            private int maxRentals = 3;
+            // Parametros usuario
+        }
+
+        private Parameters parameters;
+
+        public UserTourist(Parameters parameters, SimulationServices services) {
+            super(services);
+            this.parameters = parameters;
+        }
+
+        // Métodos de decisión
+    }
+```
+Se que no está recomendado enseñar código en las presentaciones, pero era necesario para entender tanta sobre ingeniería. Mea culpa.
+                </section>
+                <section data-markdown class="center">
+                    ### 3. Evaluación y pruebas
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 3. Evaluacion y pruebas
+                    Se realizó el siguiente experimento.
+
+                    En un area de 3km² en Madrid, se han ubicado 20 estaciones en localizaciones reales del sistema de BiciMad. 
+                    Cada una de ellas comenzará la simulación con 10 bicis. También hemos hubicado 4
+                    entry points para generar los usuarios. Se realizaron experimentos en los que se aumenta progresivamente el número de
+                    usuarios en un mismo espacio de tiempo (1 día).
+                </section>
+                <section data-markdown>
+                    ### 3. Evaluacion y pruebas
+                    Se utilizaron para esta simulación los siguientes tipos de usuarios:
+                    - Uninformed
+                    - Informed
+                    - Obedient
+                    - InformedR
+                    - ObedientR
+                    - Informed+Obedient (Mitad de usuarios Informed + Mitad de usuarios Obedient)
+                </section>
+                <section>
+                    <h3>3. Evaluacion y pruebas</h3>
+                    <img src="./images/configuration_test.png" style="width: 100%"/>
+                </section>
+                <section>
+                        <h3>Resultados del experimento</h3>
+                        <h4>Satisfacción de demanda - DS</h4>
+                        <canvas class="stretch" data-chart="line">
+<!--
+{
+    "data": {
+    "labels": ["1000","2000","3000","4000","5000","6000","7000", "8000", "9000", "10000"],
+    "datasets":[
+        {
+            "data":[0.822,0.7635,0.7176666666666667,0.648,0.6206,0.5871666666666666,0.5775714285714286,0.5755,0.5392222222222223,0.4887],
+            "label":"Uninformed",
+            "borderColor": "#0400ff"
+        },
+        {
+            "data":[0.964,0.927,0.909,0.8845,0.8464,0.7975,0.7817142857142857,0.756125,0.7305555555555555,0.7104],
+            "label":"Informed",
+            "borderColor": "#ffa100"
+        },
+        {
+            "data":[0.983,0.968,0.9463333333333334,0.87375,0.7988,0.7338333333333333,0.6631428571428571,0.649,0.6215555555555555,0.5659],
+            "label":"Obedient",
+            "borderColor": "#d6d6d6"
+        },
+        {
+            "data":[1,0.9995,0.9966666666666667,0.97475,0.7888,0.6495,0.5594285714285714,0.4855,0.4245555555555556,0.3845],
+            "label":"InformedR",
+            "borderColor": "#CF7201"
+        },
+        {
+            "data":[0.974,0.931,0.8666666666666667,0.75325,0.6642,0.5618333333333333,0.5018571428571429,0.43775,0.39511111111111114,0.3576],
+            "label":"ObedientR",
+            "borderColor": "#00bfff"
+        },
+        {
+            "data": [0.969,0.9625,0.949,0.92775,0.9028,0.885,0.841,0.792625,0.7568888888888889,0.7323],
+            "label":"Informed+Obedient",
+            "borderColor": "#62c400"
+        }
+    ]
+    }, 
+    "options": { "responsive": "true" }
+}
+-->
+                    </canvas>
+                    DS = SH / N
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 4. Conclusión y mejoras.
+                    #### Conclusiones
+                    - Se han conseguido abordar todos los objetivos
+                    planteados en un principio.
+                    - Se ha implementado un simulador consiguiendo recrear todos
+                    los elementos de la infraestructura de un sistema de bicicleteas públicas <minor>(estaciones, bicis y
+                    reservas)</minor>
+                    - Se han aplicado buenos patrones para la extensibilidad del código.
+                </section>
+                <section data-markdown style="text-align: left">
+                    #### 4. Conclusión y mejoras.
+                    - Cada una de las partes de este proyecto
+                    se ha hecho pensando siempre en la modularidad y en futuras mejoras o implementaciones de
+                    funcionalidad.
+                    - Archivos de configuración y los históricos se encuentran
+                    separados y estos pueden ser almacenados y ser compartidos por otros investigadores que estén
+                    utilizando el mismo simulador, además de proporcionar un mecanismo por el cual, se puedan
+                    crear nuevas herramientas para crear configuraciones y analizar históricos.
+                </section>
+                <section data-markdown style="text-align: left">
+                    ### 4. Conclusión y mejoras.
+                    #### Lineas futuras
+                    - Sería interesante utilizar el código para crear un framework de simulaciones de movilidad urbana,
+                    que nos pueda servir para otros simuladores de la misma índole.
+                    - Extender y mejorar la actual versión y corregir posibles errores.
+                    - Empezar a crear recomendadores en base a datos actuales y probarlos con usuarios reales.
+                </section>
+                <section data-markdown class="center">
+                    ### Demo
+                </section>
+                <section>  
+                    <video>
+                        <source data-src="./videos/Bike3S-Demo-Final.mp4" type="video/mp4" />
+                    </video>              
+                </section>
+                <section data-markdown class="center">
+                    ### ¿Preguntas?
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+                transition: 'fade',
+                center: false,
+                chart: {
+					defaults: { 
+						global: { 
+							title: { fontColor: "#FFF" }, 
+							legend: {
+								position: "bottom",
+								labels: { fontColor: "#FFF" },
+							},
+							tooltips: {
+								labels: { fontColor: "#FFF" },
+							},
+						}, 
+						scale: { 
+							scaleLabel: { fontColor: "#FFF" }, 
+							gridLines: { color: "#FFF", zeroLineColor: "#FFF" }, 
+							ticks: { fontColor: "#FFF" }, 
+						} 
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+				},
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/chart/Chart.min.js' },				
+		            { src: 'plugin/chart/csv2chart.js' }
+                ]
+			});
+		</script>
+	</body>
+</html>
