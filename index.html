@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>TFG - Bike3S</title>
+		<title>TFG - Class Recorder</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-        <link rel="stylesheet" href="css/theme/night.css">
+        <link rel="stylesheet" href="css/theme/blood.css">
         <link rel="stylesheet" href="css/custom.css">
 
 		<!-- Theme used for syntax highlighting of code -->
@@ -26,106 +26,68 @@
 		<div class="reveal">
 			<div class="slides">
 				<section class="center">
-                    <h3>Arquitectura, diseño y configuración de un simulador de bicicletas compartidas</h3>
+                    <h3>Class recorder: Una aplicación para grabación y publicación de
+                        vídeos docentes</h3>
                     <small>
-                        Autor:<a href="https://github.com/cruizba">Carlos Ruiz Ballesteros</a>
+                        Autor: <a href="https://github.com/cruizba">Carlos Ruiz Ballesteros</a>
                         <br>
-                        Tutor: <a href="">Holger Billhardt</a>
+                        Tutor: <a href="">Micael Gallego</a>
                     </small>
                     </p>
                 </section>
-                <section data-markdown>
+                <section class="index" data-markdown>
                     ### Índice de contenidos
                     1. Introducción:
                         - Motivación.
                         - Objetivos.
-                    2. Desarrollo:
+                    2. Tecnologías:
+                        - Tecnologías Backend y Frontend
+                        - Task Managing
+                        - Configuración de entorno de desarrollo automatizado.
+                        - Markdown + Pandoc = Latex.
+                        - Electron como plataforma de producción.
+                    3. Desarrollo:
                         - Arquitectura y diseño.
-                        - Configuración.
-                        - Extensibilidad.
-                    4. Pruebas.
+                        - Modulos para Ffmpeg y Youtube
+                        - Control de la grabación.
+                    4. Pruebas automaticas y despliegue automático.
                     5. Conclusión y mejoras.
+                    6. Demos.
                 </section>
                 <section data-markdown class="center">
-                    ### 1. Introducción - Motivación
+                    ### 1.1 Introducción - Motivación
                 </section>
 				<section>
-                    <h3>1. Introducción - Motivación</h3>
+                    <h3>1.1 Introducción - Motivación</h3>
                     <div>
                         <ul>
-                            <li> Movilidad en las grandes ciudades:
+                            <li> Problemas más comunes al grabar clases:
                             <ul>
-                                <li> Ágil.
-                                <li> Accesible para todos.
-                            </ul>
-                            <li> Problema de interes creciente debido a:
-                            <ul>
-                                <li> Mejorar circulación automovilística.
-                                <li> Reducción de la contaminación.
-                                <li> Incentivación de medios alternativos como servicio.
+                                <li> Multitud de herramientas con las que grabar.
+                                <li> Aprendizaje de estas herramientas, que normalmente suelen tener
+                                    mucha funcionalidad extra que el profesor no necesita.
+                                <li> Se reduce el tiempo a la enseñanza y preparación de contenido
+                                    durante la edición del video.
+                                <li> Grabación del audio de las clases. ¿Móvil o Pc?
                             </ul>
                         </ul>
                     </div>
-                </section>
-                <section>
-                    <h3>1. Introducción - Motivación</h3>
-                    <div style="float: right; width: 35%">
-                        <img src="./images/BiciMAD.jpg"/>
-                        <img src="./images/velib.jpg">
-                    </div>
-                    <div style="text-align: left; width: 65%">
-                        <p>Mejorar los sistemas ya existentes, como por ejemplo los sistemas de bicicletas compartidas.</p>
-                        <ul>
-                            <li>Ejemplos</li>
-                            <ul>
-                                <li>BiciMad <minor>Madrid - España</minor></li>
-                                <li>Vèlib <minor>Paris - Francia</minor></li>
-                                <li>Santander cycles<minor>Londres - Reino Unido</minor></li>
-                            </ul>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h3>1. Introducción - Motivación</h3>
-                    <h4>¿Qué podemos hacer para mejorar este sistema?</h4>
-                    <h5></h5>
-                    <div style="text-align: left;">
-                        <p>Balancear los recursos (bicicletas) entre estaciones. Algunas situaciones que pueden producir
-                                un desequilibrio son:
-                        </p>
-                        <ul>
-                            <li>Eventos especiales</li>
-                            <li>Horas punta</li>
-                            <li>Aglomeraciones inesperadas</li>
-                        </ul>
-                    </div>
-                </section>
-                <section data-markdown>
-                    ### 1. Introducción - Motivación
-                    <div style="text-align: left">
-
-                    #### ¿Cómo podemos probar nuevas estrategias de balanceo?
-                    Probar/implementar soluciones a estos problemas en la realidad puede ser muy tedioso y complicado:
-                    - Altos riesgos y costes.
-                    - Posibles cambios estructurales.
-                    - Implementación de nuevos sistemas informáticos.
-                    
-                    </div>
-                    
                 </section>
                 <section data-markdown class="center">
-                    # Necesitamos un simulador
+                        ### Neceistamos reducir el tiempo invertido en las grabaciones de clases
                 </section>
                 <section data-markdown class="center">
-                    ### 1. Introducción - Objetivos
+                        ### Facilitar y agilizar el proceso de la grabación de estas.
                 </section>
-                <section data-markdown>
-                    ### 1. Introducción - Objetivos
-                    #### Objetivos globales
-
-                    - Probar algoritmos de balanceo y predicción de demanda.
-                    - Implementar sistemas de recomendaciones e incentivos para optimizar la disponibilidad de bicis.
-                    - Plantear nuevas distribuciones de estaciones sobre una ciudad.
+                <section data-markdown class="center">
+                    ### 1.2 Introducción - Objetivos
+                </section>
+                <section class="center">
+                    <h3>1.2 Introducción - Objetivos</h3>
+                    <p>En este proyecto proponemos una única solución para la realización de todo este proceso de
+                    grabación y distribución de clases. Es importante recalcar que nuestro objetivo principal y el
+                    propuesto con este proyecto es crear un único flujo de trabajo, mediante las siguientes herramientas
+                    software que hemos creado:</>
 
                 </section>
                 <section data-markdown>
@@ -195,7 +157,7 @@
                     - Entry Points:
 
                     Son puntos geográficos desde los cuales aparecerán usuarios de una forma determinada (por ejemplo, siguiendo un proceso de Poisson) a lo largo del tiempo.
-                    
+
                     - Usuarios individuales:
 
                     El simulador recibe este fichero con información precisa de su ubicación y momento de aparición.
@@ -208,7 +170,7 @@
                     - Usuarios.
                     - Parámetros globales.
 
-                    Si se desean crear un archivo de configuración de usuarios el simulador dispone de un generador que recibe entry points. 
+                    Si se desean crear un archivo de configuración de usuarios el simulador dispone de un generador que recibe entry points.
                 </section>
                 <section data-markdown class="center">
                     ### 2. Desarrollo - Extensibilidad.
@@ -264,7 +226,7 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
                     ### 3. Evaluacion y pruebas
                     Se realizó el siguiente experimento.
 
-                    En un area de 3km² en Madrid, se han ubicado 20 estaciones en localizaciones reales del sistema de BiciMad. 
+                    En un area de 3km² en Madrid, se han ubicado 20 estaciones en localizaciones reales del sistema de BiciMad.
                     Cada una de ellas comenzará la simulación con 10 bicis. También hemos hubicado 4
                     entry points para generar los usuarios. Se realizaron experimentos en los que se aumenta progresivamente el número de
                     usuarios en un mismo espacio de tiempo (1 día).
@@ -323,7 +285,7 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
             "borderColor": "#62c400"
         }
     ]
-    }, 
+    },
     "options": { "responsive": "true" }
 }
 -->
@@ -361,10 +323,10 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
                 <section data-markdown class="center">
                     ### Demo
                 </section>
-                <section>  
+                <section>
                     <video>
                         <source data-src="./videos/Bike3S-Demo-Final.mp4" type="video/mp4" />
-                    </video>              
+                    </video>
                 </section>
                 <section data-markdown class="center">
                     ### ¿Preguntas?
@@ -383,9 +345,9 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
                 transition: 'fade',
                 center: false,
                 chart: {
-					defaults: { 
-						global: { 
-							title: { fontColor: "#FFF" }, 
+					defaults: {
+						global: {
+							title: { fontColor: "#FFF" },
 							legend: {
 								position: "bottom",
 								labels: { fontColor: "#FFF" },
@@ -393,24 +355,24 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
 							tooltips: {
 								labels: { fontColor: "#FFF" },
 							},
-						}, 
-						scale: { 
-							scaleLabel: { fontColor: "#FFF" }, 
-							gridLines: { color: "#FFF", zeroLineColor: "#FFF" }, 
-							ticks: { fontColor: "#FFF" }, 
-						} 
+						},
+						scale: {
+							scaleLabel: { fontColor: "#FFF" },
+							gridLines: { color: "#FFF", zeroLineColor: "#FFF" },
+							ticks: { fontColor: "#FFF" },
+						}
 					},
-					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
-					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] },
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]},
 					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
-					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]},
 				},
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                    { src: 'plugin/chart/Chart.min.js' },				
+                    { src: 'plugin/chart/Chart.min.js' },
 		            { src: 'plugin/chart/csv2chart.js' }
                 ]
 			});
