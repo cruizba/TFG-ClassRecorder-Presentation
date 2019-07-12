@@ -7,7 +7,7 @@
 		<title>TFG - Class Recorder</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-        <link rel="stylesheet" href="css/theme/blood.css">
+        <link rel="stylesheet" href="css/theme/beige.css">
         <link rel="stylesheet" href="css/custom.css">
 
 		<!-- Theme used for syntax highlighting of code -->
@@ -35,298 +35,299 @@
                     </small>
                     </p>
                 </section>
-                <section class="index" data-markdown>
+                <section class="center" data-markdown>
                     ### Índice de contenidos
-                    1. Introducción:
-                        - Motivación.
-                        - Objetivos.
-                    2. Tecnologías:
-                        - Tecnologías Backend y Frontend
-                        - Task Managing
-                        - Configuración de entorno de desarrollo automatizado.
-                        - Markdown + Pandoc = Latex.
-                        - Electron como plataforma de producción.
-                    3. Desarrollo:
-                        - Arquitectura y diseño.
-                        - Modulos para Ffmpeg y Youtube
-                        - Control de la grabación.
-                    4. Pruebas automaticas y despliegue automático.
+                    1. Introducción.
+                    2. Tecnologías.
+                    3. Arquitectura, diseño y desarrollo.
+                    4. Pruebas y releases automáticas.
                     5. Conclusión y mejoras.
-                    6. Demos.
+                    6. Demo.
                 </section>
                 <section data-markdown class="center">
                     ### 1.1 Introducción - Motivación
                 </section>
 				<section>
                     <h3>1.1 Introducción - Motivación</h3>
-                    <div>
+                    <h4>Problemas más comunes al grabar clases</h4>
+                    <div class="center" style="float: right; width: 50%; padding-top: 5%">
+                        <img src="./images/image_editors.png" style="width: 100%; border: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    </div>
+                    <div style="padding-top: 60px; width: 50%">
                         <ul>
-                            <li> Problemas más comunes al grabar clases:
-                            <ul>
-                                <li> Multitud de herramientas con las que grabar.
-                                <li> Aprendizaje de estas herramientas, que normalmente suelen tener
-                                    mucha funcionalidad extra que el profesor no necesita.
-                                <li> Se reduce el tiempo a la enseñanza y preparación de contenido
-                                    durante la edición del video.
-                                <li> Grabación del audio de las clases. ¿Móvil o Pc?
-                            </ul>
+                            <li> Multitud de herramientas con las que grabar.
+                            <li> Aprendizaje de estas herramientas.
+                            <li> Grabación del audio de las clases. ¿Móvil o Pc?
                         </ul>
                     </div>
                 </section>
                 <section data-markdown class="center">
-                        ### Neceistamos reducir el tiempo invertido en las grabaciones de clases
-                </section>
-                <section data-markdown class="center">
-                        ### Facilitar y agilizar el proceso de la grabación de estas.
+                        ### Necesitamos reducir el tiempo invertido en las grabaciones de clases
                 </section>
                 <section data-markdown class="center">
                     ### 1.2 Introducción - Objetivos
                 </section>
                 <section class="center">
                     <h3>1.2 Introducción - Objetivos</h3>
-                    <p>En este proyecto proponemos una única solución para la realización de todo este proceso de
-                    grabación y distribución de clases. Es importante recalcar que nuestro objetivo principal y el
-                    propuesto con este proyecto es crear un único flujo de trabajo, mediante las siguientes herramientas
-                    software que hemos creado:</>
-
-                </section>
-                <section data-markdown>
-                    ### 1. Introducción - Objetivos
-                    #### Objetivos de este TFG
-
-                    - Simulaciones realistas:
-                        - Usuarios que utilicen rutas reales.
-                        - Poder simular distintos tipos de usuarios.
-                        - Recrear infraestructuras reales en ciudades reales.
-                    - Configuración de un estado inicial del sistema.
-                    - Extensibilidad del simulador.
-                        - Crear nuevos usuarios con facilidad.
-                        - Crear nuevos recomendadores con facilidad.
-                </section>
-                <section data-markdown class="center">
-                    ### 2. Desarrollo - Arquitectura y diseño
+                    <ul>
+                        <li>Crear un único flujo de trabajo.
+                        <li>Una sola aplicación para Windows y Linux.
+                        <li>Aplicación móvil para controlar grabación y grabar audio.
+                    </ul>
+                    <img src="./images/introduction_diagram.png" style="width: 40%; border: 0px"/>
                 </section>
                 <section>
-                    <h3>2. Desarrollo - Arquitectura y diseño.</h3>
-                    <h4>Arquitectura simple del simulador</h4>
-                    <img src="./images/Arquitecture_1_v2.jpg" style="width: 100%"/>
-                </section>
-                <section data-markdown>
-                    ### 2. Desarrollo - Arquitectura y diseño
-                    #### Dividido en dos partes principales
-                    - Backend - Lógica del simulador
-                        - Cargador de configuración
-                        - Núcleo
-                        - Generador de históricos
-                    - Frontend - Interfaz de usuario
-                        - Editor de configuraciones
-                        - Cargador de configuraciones en el simulador
-                        - Visualizador de históricos
-                        - Analizador de históricos
+                    <h3>1.2 Introducción - Objetivos.</h3>
+                    <img src="./images/captures/capture_16.png" style="width: 70%; border: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
                 </section>
                 <section>
-                    <h3>2. Desarrollo - Arquitectura y diseño</h3>
-                    <img src="./images/Arquitecture_final.png" style="width: 80%"/>
-                </section>
-                <section data-markdown class="center">
-                    ### 2. Desarrollo - Configuración
-                </section>
-                <section data-markdown style="text-align: left">
-                    ### 2. Desarrollo - Configuración
-                    Para definir un estado inicial necesitamos unos archivos de configuración.
-                    - Estaciones:
-                        - Capacidad: Número de bicis disponibles.
-                        - Cantidad de bicis.
-                        - Posición geográfica.
-                    - Parámetros globales.
-                        - Tiempo máximo de reservas.
-                        - Tiempo total de simulación.
-                        - Semilla.
-                        - Cuadro delimitador.
-                        - Directorio de históricos.
-                </section>
-                <section data-markdown class="center">
-                    ## Falta lo más importante.
-                </section>
-                <section data-markdown class="center">
-                    ## Los usuarios.
-                </section>
-                <section data-markdown style="text-align: left">
-                    ### 2. Desarrollo - Configuración
-                    #### Dos formas de configurar los usuarios.
-                    - Entry Points:
-
-                    Son puntos geográficos desde los cuales aparecerán usuarios de una forma determinada (por ejemplo, siguiendo un proceso de Poisson) a lo largo del tiempo.
-
-                    - Usuarios individuales:
-
-                    El simulador recibe este fichero con información precisa de su ubicación y momento de aparición.
-                </section>
-                <section data-markdown style="text-align: left">
-                    ### 2. Desarrollo - Configuración
-                    #### En resumen
-                    Archivos de configuración necesarios:
-                    - Estaciones.
-                    - Usuarios.
-                    - Parámetros globales.
-
-                    Si se desean crear un archivo de configuración de usuarios el simulador dispone de un generador que recibe entry points.
-                </section>
-                <section data-markdown class="center">
-                    ### 2. Desarrollo - Extensibilidad.
-                </section>
-                <section data-markdown style="text-align: left">
-                    ### 2. Desarrollo - Extensibilidad.
-                    Se han utilizado técnicas y patrones de diseño para la facil implementación para nuevos desarrolladores.
-                    - Factorías.
-                    - Inyección de dependencias.
-                    - Reflexión.
+                    <h3>2 Tecnologías - Objetivos.</h3>
+                    <img src="./images/Technologies.png" style="width: 70%; border: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
                 </section>
                 <section>
-                    <h3>2. Desarrollo - Extensibilidad.</h3>
-                    <h4>Ejemplo con los usuarios</h4>
-                    <img src="./images/User_factory.png" style="width: 80%"/>
-                </section>
-                <section data-markdown class="center">
-                    ### ¿Que ventajas nos aporta utilizar tantas técnicas y patrones?
+                    <h3>2. Tecnologías</h3>
+                    <img src="./images/technologies_2.png" style="width: 50%; border: 0px"/>
                 </section>
                 <section>
-                    <h3>Mejor os lo muestro</h3>
-                    <img src="./images/linus.jpg">
+                    <h3>2. Tecnologías</h3>
+                    <img src="./images/gulp_automation.png" style="width: 35%; border: 0px"/>
                 </section>
-                <section data-markdown class="center" style="font-size: 30px">
-                    ¡Sólo este código es necesario para empezar a implementar un usuario!
-
+                <section>
+                    <h3>2. Tecnologías</h3>
+                    <img src="./images/gulp-automation-with-docker.png" style="width: 38%; border: 0px"/>
+                </section>
+                <section>
+                    <h3>2. Tecnologías</h3>
+                    <br>
+                    <h4>Documentación como código</h4>
+                    <p style="text-align: center;">Toda la documentación se ha realizado en Markdown en repositorios de código.</p>
+                    <img src="./images/pandoc_markdown.png" style="width: 40%; border: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    <p style="text-align: center;">La presente memoria se ha convertido a LaTeX con el uso de Pandoc</p>
+                </section>
+                <section>
+                    <h3>2. Tecnologías</h3>
+                    <h4>Electron para distribuir la aplicación de escritorio.</h4>
+                    <img src="./images/electron_no_docker.png" style="width: 40%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    <p style="text-align: center;">¿Por qué no usar Docker para empaquetar Class Recorder?</p>
+                    <ul>
+                        <li>Incompatibilidades con servidor de ventanas de Linux X11</li>
+                        <li>No es User-Friendly para los que no saben desarrollar</li>
+                        <li>Electron facilita la instalación</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>2. Tecnologías</h3>
+                    <h4>Electron para distribuir la aplicación de escritorio.</h4>
+                    <img src="./images/electron_package.png" style="width: 140%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Arquitectura</h4>
+                    <div style="float: right; width: 50%">
+                        <img src="./images/class-recorder-arch.png" style="margin-top: 70px; width: 100%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    </div>
+                    <div style="text-align: left; width: 50%">
+                        <ul style="padding-top:70px;">
+                            <li>Aplicación móvil y servidor de aplicación de escritorio se comunican en local</li>
+                            <li>WebSockets</li>
+                            <li>Servidor de la aplicación de escritorio se encarga de las grabaciones</li>
+                            <li>Publicar vídeos a Youtube</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Módulo Ffmpeg Wrapper</h4>
+                    <img src="./images/Ffmpeg_selected.png" style="width: 60%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Módulo Ffmpeg Wrapper</h4>
+                    <div style="float: right; width: 50%">
+                        <img src="./images/FFmpeg.png" style="margin-top: 70px; width: 100%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    </div>
+                    <div style="text-align: left; width: 50%">
+                        <ul style="padding-top:70px;">
+                            <li>Ffmpeg es una herramienta CLI de conversión y edición de vídeos</li>
+                            <li>Permite grabar el escritorio.</li>
+                            <li>Es multiplataforma, por lo cual podríamos usarlo tanto en Windows como en Linux</li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="center">
+                        <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                        <h4>Diseño - Módulo Ffmpeg Wrapper</h4>
+                        <p style="text-align: center">El servidor de la aplicación de escritorio se encargará de ejecutar Ffmpeg en el sistema Windows/Linux para
+                        gestionar las grabaciones, cortar los vídeos y juntarlos</p>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Módulo Ffmpeg Wrapper</h4>
+                    <img src="./images/ffmpegwrapper_uml.png" style="width: 70%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section data-markdown class="center">
+                ### 3. Arquitectura, diseño y desarrollo.
+                #### Diseño - Módulo Ffmpeg Wrapper
 ```
-    @UserType("USER_TOURIST")
-    public class UserTourist extends User {
+// Inicialización Ffmpeg Wrapper
+FfmpegWrapper ffmpeg = new FfmpegWrapper();
 
-        @UserParameters
-        public class Parameters {
-            private int maxRentals = 3;
-            // Parametros usuario
-        }
+ffmpeg.setAudioFormat(FfmpegAudioFormat.libvorbis)
+    .setVideoFormat(FfmpegVideoFormat.libx264)
+    .setContainerVideoFormat(FfmpegContainerFormat.mkv)
+    .setFrameRate(60)
+    .setDirectory("videos")
+    .setVideoName("test");
 
-        private Parameters parameters;
-
-        public UserTourist(Parameters parameters, SimulationServices services) {
-            super(services);
-            this.parameters = parameters;
-        }
-
-        // Métodos de decisión
-    }
+ffmpeg.startRecordingVideoAndAudio();
 ```
-Se que no está recomendado enseñar código en las presentaciones, pero era necesario para entender tanta sobre ingeniería. Mea culpa.
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Módulo Youtube</h4>
+                    <img src="./images/youtube_selected.png" style="width: 60%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Módulo Youtube Uploader</h4>
+                    <div style="float: right; width: 50%">
+                        <img src="./images/captures/capture_youtube.png" style="margin-top: 70px; border: 2px solid #333; width: 80%; box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);"/>
+                    </div>
+                    <div style="text-align: left; width: 50%">
+                        <ul style="padding-top:70px;">
+                            <li>Los vídeos deben poder publicarse, y estar disponibles para los alumnos</li>
+                            <li>Utilizamos una API específica de Google para subir vídeos a Youtube</li>
+                        </ul>
+                    </div>
                 </section>
                 <section data-markdown class="center">
-                    ### 3. Evaluación y pruebas
-                </section>
-                <section data-markdown style="text-align: left">
-                    ### 3. Evaluacion y pruebas
-                    Se realizó el siguiente experimento.
+                    ### 3. Arquitectura, diseño y desarrollo.
+                    #### Diseño - Módulo Ffmpeg Wrapper
+```
+// Inicialización módulo Youtube
+YoutubeUploader youtube = new YoutubeUploader();
 
-                    En un area de 3km² en Madrid, se han ubicado 20 estaciones en localizaciones reales del sistema de BiciMad.
-                    Cada una de ellas comenzará la simulación con 10 bicis. También hemos hubicado 4
-                    entry points para generar los usuarios. Se realizaron experimentos en los que se aumenta progresivamente el número de
-                    usuarios en un mismo espacio de tiempo (1 día).
+YoutubeVideoInfo videoInfo = new YoutubeVideoInfo();
+videoInfo.setVideoTitle("Video de prueba")
+    .setDescription("Descripcion del video")
+    .setPrivacyStatus("unlisted")
+    .setVideoPath("videos/video_de_prueba1.mkv");
+
+youtube.uploadVideo(videoInfo);
+```
+
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Comunicación Aplicación escritorio y móvil</h4>
+                    <img src="./images/Communication_selected.png" style="width: 65%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Websockets Para controlar la grabación</h4>
+                    <div style="float: right; width: 50%">
+                        <img src="./images/websocket.svg" style="margin-top: 100px; width: 60%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                    </div>
+                    <div style="text-align: left; width: 50%">
+                        <ul>
+                            <li>Necesitamos controlar la grabación.</li>
+                            <li>La grabación debe poder controlarse desde la aplicación móvil o desde la aplicación web</li>
+                            <li>Necesitamos que ambos dispositovos (PC y móvil) sepan del estado de la grabación.</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Websockets Para controlar la grabación</h4>
+                    <img src="./images/sequence_1.png" style="width: 50%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <img src="./images/sequence_2.png" style="width: 70%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <img src="./images/sequence_3.png" style="width: 40%; border: 0px;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo.</h3>
+                    <h4>Diseño - Modelo de Entidad Relación</h4>
+                    <img src="./images/persistence_selected.png" style="width: 65%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <img src="./images/er_diagram.png" style="width: 39%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>3. Arquitectura, diseño y desarrollo</h3>
+                    <h4>Desarrollo en Spring Boot</h4>
+                    <img src="./images/spring-boot-services.png" style="width: 39%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
                 </section>
                 <section data-markdown>
-                    ### 3. Evaluacion y pruebas
-                    Se utilizaron para esta simulación los siguientes tipos de usuarios:
-                    - Uninformed
-                    - Informed
-                    - Obedient
-                    - InformedR
-                    - ObedientR
-                    - Informed+Obedient (Mitad de usuarios Informed + Mitad de usuarios Obedient)
-                </section>
-                <section>
-                    <h3>3. Evaluacion y pruebas</h3>
-                    <img src="./images/configuration_test.png" style="width: 100%"/>
-                </section>
-                <section>
-                        <h3>Resultados del experimento</h3>
-                        <h4>Satisfacción de demanda - DS</h4>
-                        <canvas class="stretch" data-chart="line">
-<!--
-{
-    "data": {
-    "labels": ["1000","2000","3000","4000","5000","6000","7000", "8000", "9000", "10000"],
-    "datasets":[
-        {
-            "data":[0.822,0.7635,0.7176666666666667,0.648,0.6206,0.5871666666666666,0.5775714285714286,0.5755,0.5392222222222223,0.4887],
-            "label":"Uninformed",
-            "borderColor": "#0400ff"
-        },
-        {
-            "data":[0.964,0.927,0.909,0.8845,0.8464,0.7975,0.7817142857142857,0.756125,0.7305555555555555,0.7104],
-            "label":"Informed",
-            "borderColor": "#ffa100"
-        },
-        {
-            "data":[0.983,0.968,0.9463333333333334,0.87375,0.7988,0.7338333333333333,0.6631428571428571,0.649,0.6215555555555555,0.5659],
-            "label":"Obedient",
-            "borderColor": "#d6d6d6"
-        },
-        {
-            "data":[1,0.9995,0.9966666666666667,0.97475,0.7888,0.6495,0.5594285714285714,0.4855,0.4245555555555556,0.3845],
-            "label":"InformedR",
-            "borderColor": "#CF7201"
-        },
-        {
-            "data":[0.974,0.931,0.8666666666666667,0.75325,0.6642,0.5618333333333333,0.5018571428571429,0.43775,0.39511111111111114,0.3576],
-            "label":"ObedientR",
-            "borderColor": "#00bfff"
-        },
-        {
-            "data": [0.969,0.9625,0.949,0.92775,0.9028,0.885,0.841,0.792625,0.7568888888888889,0.7323],
-            "label":"Informed+Obedient",
-            "borderColor": "#62c400"
-        }
-    ]
-    },
-    "options": { "responsive": "true" }
+                    ### 3. Arquitectura, diseño y desarrollo
+                    #### Desarrollo en Spring Boot
+                    Los módulos implementados con anterioridad, son usados como servicios en la aplicación principal
+```
+@Bean
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+public YoutubeService youtubeService() throws YoutubeApiException {
+    return new YoutubeService(properties);
 }
--->
-                    </canvas>
-                    DS = SH / N
+
+@Bean
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+public FfmpegService ffmpegService() throws OperationNotSupportedException,
+                                            IOException {
+    return new FfmpegService(classRecProperties.getOutputFfmpeg(),
+        System.getenv("DISPLAY"), classRecProperties.getFfmpegDirectory());
+}
+```
                 </section>
-                <section data-markdown style="text-align: left">
-                    ### 4. Conclusión y mejoras.
-                    #### Conclusiones
-                    - Se han conseguido abordar todos los objetivos
-                    planteados en un principio.
-                    - Se ha implementado un simulador consiguiendo recrear todos
-                    los elementos de la infraestructura de un sistema de bicicleteas públicas <minor>(estaciones, bicis y
-                    reservas)</minor>
-                    - Se han aplicado buenos patrones para la extensibilidad del código.
+                <section>
+                    <h3>4. Pruebas y releases automáticas.</h3>
+                    <div data-markdown>
+                        El sistema de travis se ejecuta por commit y los pasos en concreto del sistema de CI/CD son los
+                        siguientes:
+                        1. Clona el repositorio de class-recorder principal.
+                        2. Levanta la infraestructura necesaria para la aplicación con docker compose.
+                        3. Instala las dependencias necesarias.
+                        4. Inicia el servidor principal de la aplicación de grabación
+                        5. Ejecuta los test e2e del frontend de pc.
+                        6. Crea los binarios de la aplicación.
+                    </div>
                 </section>
-                <section data-markdown style="text-align: left">
-                    #### 4. Conclusión y mejoras.
-                    - Cada una de las partes de este proyecto
-                    se ha hecho pensando siempre en la modularidad y en futuras mejoras o implementaciones de
-                    funcionalidad.
-                    - Archivos de configuración y los históricos se encuentran
-                    separados y estos pueden ser almacenados y ser compartidos por otros investigadores que estén
-                    utilizando el mismo simulador, además de proporcionar un mecanismo por el cual, se puedan
-                    crear nuevas herramientas para crear configuraciones y analizar históricos.
+                <section>
+                    <h3>4. Pruebas y releases automáticas.</h3>
+                    <h4>Resultados Travis</h4>
+                    <img src="./images/travis_capture.png" style="width: 39%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
                 </section>
-                <section data-markdown style="text-align: left">
-                    ### 4. Conclusión y mejoras.
-                    #### Lineas futuras
-                    - Sería interesante utilizar el código para crear un framework de simulaciones de movilidad urbana,
-                    que nos pueda servir para otros simuladores de la misma índole.
-                    - Extender y mejorar la actual versión y corregir posibles errores.
-                    - Empezar a crear recomendadores en base a datos actuales y probarlos con usuarios reales.
+                <section>
+                    <h3>4. Pruebas y releases automáticas.</h3>
+                    <h4>Releases</h4>
+                    <p>Por cada commit marcado con una etiqueta (tag), se crea una release, con los binarios resultantes automáticamente.</p>
+                    <img src="./images/captures/releases.png" style="width: 50%; border: 2px solid #333;  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15)"/>
+                </section>
+                <section>
+                    <h3>5. Conclusiones y mejoras</h3>
+                    <p>Lecciones aprendidas:</p>
+                    <br>
+                    <ul>
+                        <li>Modularizar y desacoplar el código es siempre una buena práctica</li>
+                        <li>Los test e2e cubren mucha lógica de negocio y facilita la detección de errores, pero es difícil saber las causas de ellos</li>
+                        <li>Hacer testing sobre sistemas que producen, procesan o graban audio, no es trivial</li>
+                        <li>Angular es muy conveniente como framework hoy día para hacer cualquier tipo de aplicación.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>5. Conclusiones y mejoras</h3>
+                    <p>Líneas futuras:</p>
+                    <br>
+                    <ul>
+                        <li>Grabar entradas de vídeo en paralelo, como webcams o cámaras usb, y poder cambiar de camara de grabación a través del móvil</li>
+                        <li>Controlar aspectos del ordenador desde el movil, como mover el raton, rodear o señalar cosas</li>
+                        <li>Sincronizar la plataforma con otros servicios de distribución de vídeos, servicios propios, etc.</li>
+                        <li>Añadir un mecanismo que nos permita descartar tomas de vídeo al instante desde el móvil</li>
+                    </ul>
                 </section>
                 <section data-markdown class="center">
                     ### Demo
-                </section>
-                <section>
-                    <video>
-                        <source data-src="./videos/Bike3S-Demo-Final.mp4" type="video/mp4" />
-                    </video>
                 </section>
                 <section data-markdown class="center">
                     ### ¿Preguntas?
@@ -344,6 +345,7 @@ Se que no está recomendado enseñar código en las presentaciones, pero era nec
 			Reveal.initialize({
                 transition: 'fade',
                 center: false,
+                slideNumber: 'c/t',
                 chart: {
 					defaults: {
 						global: {

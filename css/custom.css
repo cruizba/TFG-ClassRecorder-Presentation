@@ -21,3 +21,20 @@ a {
 p {
     text-align: left;
 }
+
+.reveal .slide-number {
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.reveal .controls .navigate-right .controls-arrow {
+    margin-bottom: 30px;
+}
+
+.reveal .controls .navigate-left .controls-arrow {
+    margin-bottom: 30px;
+}
+
+.slides {
+    width: 90% !important;
+}
